@@ -30,13 +30,14 @@ async def process_pdf(file: UploadFile = File(...)):
 
 from fastapi import FastAPI
 from twilio.rest import Client
+import os  # Necesitamos importar os para acceder a las variables de entorno
 
 app = FastAPI()
 
-# Configuración de Twilio (reemplaza con tus datos)
-TWILIO_ACCOUNT_SID = "tu_account_sid"
-TWILIO_AUTH_TOKEN = "tu_auth_token"
-TWILIO_PHONE_NUMBER = "tu_numero_de_twilio"
+# Obtén las credenciales desde las variables de entorno
+TWILIO_ACCOUNT_SID = os.getenv("TWILIO_ACCOUNT_SID")
+TWILIO_AUTH_TOKEN = os.getenv("TWILIO_AUTH_TOKEN")
+TWILIO_PHONE_NUMBER = os.getenv("TWILIO_PHONE_NUMBER")
 
 @app.post("/send-message", operation_id="send_message")
 async def send_message(recipient: str, message: str):
